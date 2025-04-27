@@ -83,7 +83,7 @@ export default function TransactionsPage() {
   });
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+    <div className="max-w-screen-2xl mx-auto w-full pb-10 pt-6">
       <h1 className="text-2xl font-semibold mb-6">Transaction History</h1>
       
       {/* TODO: Add Filters and Search Bar here later */}
