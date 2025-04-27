@@ -3,9 +3,9 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 const users = [
-  { userid: "FYJ57", name: "Alice Johnson" },
-  { userid: "KXJ83", name: "Bob Smith" },
-  { userid: "CX734", name: "Charlie Lee" },
+  { userid: "FYJ57", name: "Alice Johnson - FYJ57" },
+  { userid: "KXJ83", name: "Bob Smith - KXJ83" },
+  { userid: "CX734", name: "Charlie Lee - CX734" },
 ];
 
 type User = typeof users[number];
