@@ -3,7 +3,7 @@ import logging
 from openai import OpenAI
 from dotenv import load_dotenv
 
-class OpenAIClient:
+class MarketResearch:
     def __init__(self):
         load_dotenv()
         self.api_key = os.getenv("OPENAI_API_KEY")
@@ -11,7 +11,7 @@ class OpenAIClient:
             raise ValueError("OPENAI_API_KEY not found in environment variables.")
         self.client = OpenAI(api_key=self.api_key)
 
-    def search_and_respond(self, query: str, model: str = "gpt-4.1") -> str:
+    def search_and_respond(self, company_name: str, model: str = "gpt-4o") -> str:
         """
         Perform a search-enabled query using the OpenAI API.
 
@@ -26,7 +26,8 @@ class OpenAIClient:
             response = self.client.responses.create(
                 model=model,
                 tools=[{"type": "web_search_preview"}],
-                input=query,
+                input=  [{"role":"system","content":"You are a news curator. Your job is to constantly monitor current events across politics, technology, business, science, and culture. Summarize important developments clearly, stay unbiased, highlight emerging trends, and maintain up-to-date knowledge about what's happening around the world"},
+                        {"role":"user","content":f"Research what's happening around {company_name} stocks and tell me the current stock price"}]
             )
             return response.output_text
         except Exception as e:
@@ -36,11 +37,11 @@ class OpenAIClient:
 def main():
     logging.basicConfig(level=logging.INFO)
     
-    query = "Research NVIDIA stock and tell me if it is a good time to buy stocks or not"
+    comp_name = "NVIDIA"
     
     ai_client = OpenAIClient()
     try:
-        output = ai_client.search_and_respond(query)
+        output = ai_client.search_and_respond(comp_name)
         logging.info("Response from AI:")
         print(output)
     except Exception as e:
