@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useUser } from '@/lib/user-context'; // User Context
+import { useEffect, useMemo, useState } from 'react';
+import { useUser } from '@/lib/user-context';
 import { DataCard } from "@/components/data-card";
 import { FaPiggyBank } from "react-icons/fa";
 import { StockTreemap } from '@/components/stock-treemap';
@@ -22,7 +22,7 @@ interface StockData {
 }
 
 export default function PortfolioPage() {
-  const { selectedUser } = useUser(); // <-- Get selected user
+  const { selectedUser } = useUser();
   const [userData, setUserData] = useState<UserPortfolio | null>(null);
   const [stocks, setStocks] = useState<StockData[]>([]);
   const [selectedStock, setSelectedStock] = useState<StockData | null>(null);
@@ -53,26 +53,36 @@ export default function PortfolioPage() {
     if (!userData) return;
 
     const symbols = Object.keys(userData.portfolio);
+
     const prices = await fetchStockPrices(symbols);
 
-    const updatedStocks = symbols.map((symbol) => ({
-      name: symbol,
-      value: (userData.portfolio[symbol] ?? 0) * (prices[symbol] ?? 0),
-      change: (Math.random() - 0.5) * 5, // dummy daily % change
-    }));
+    const updatedStocks = symbols.map((symbol) => {
+      const shares = userData.portfolio[symbol] ?? 0;
+      const newPrice = prices[symbol] ?? 0;
+
+      // 🛠 Assume previous price is $100 for now
+      const previousPrice = 100;
+      const changePercent = previousPrice > 0 ? ((newPrice - previousPrice) / previousPrice) * 100 : 0;
+
+      return {
+        name: symbol,
+        value: shares * newPrice,
+        change: changePercent,
+      };
+    });
 
     setStocks(updatedStocks);
   };
 
   useEffect(() => {
     fetchPortfolioData();
-  }, [selectedUser]); // 🛠️ refetch whenever selectedUser changes
+  }, [selectedUser]);
 
   useEffect(() => {
     if (!userData) return;
 
     refreshStockData();
-    const interval = setInterval(refreshStockData, 30000); // Refresh every 30 sec
+    const interval = setInterval(refreshStockData, 30000);
     return () => clearInterval(interval);
   }, [userData]);
 
@@ -80,12 +90,20 @@ export default function PortfolioPage() {
     setSelectedStock(stock);
   };
 
-  if (loading || !userData) {
-    return <div className="flex items-center justify-center h-[calc(100vh-200px)] text-gray-400">Loading Portfolio...</div>;
-  }
+  const netWorth = useMemo(() => {
+    if (!userData) return 0;
+    return userData.bank_bal + stocks.reduce((acc, stock) => acc + stock.value, 0);
+  }, [userData, stocks]);
 
-  const netWorth = userData.bank_bal + stocks.reduce((acc, stock) => acc + stock.value, 0);
-  const dummyDailyVariationValue = (Math.random() - 0.5) * 1000;
+  const dummyDailyVariationValue = (Math.random() - 0.5) * 1000; // ❗ you can also link this to real portfolio variation later
+
+  if (loading || !userData) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-200px)] text-gray-400">
+        Loading Portfolio...
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 pt-6">
