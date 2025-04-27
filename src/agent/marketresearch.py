@@ -14,13 +14,6 @@ class MarketResearch:
     def search_and_respond(self, company_name: str, model: str = "gpt-4o") -> str:
         """
         Perform a search-enabled query using the OpenAI API.
-
-        Args:
-            query (str): The question or prompt to be sent.
-            model (str): The model version to use.
-
-        Returns:
-            str: The AI's output text.
         """
         try:
             response = self.client.responses.create(

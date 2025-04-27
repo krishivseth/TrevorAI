@@ -1,0 +1,32 @@
+[
+  {
+    "userid": "user123",
+    "user_name": "Alice Johnson",
+    "bank_bal": 11974.5,
+    "portfolio": {
+      "AAPL": 11,
+      "GOOGL": 5,
+      "TSLA": 2
+    }
+  },
+  {
+    "userid": "user456",
+    "user_name": "Bob Smith",
+    "bank_bal": 8500.75,
+    "portfolio": {
+      "AMZN": 3,
+      "NFLX": 7,
+      "MSFT": 4
+    }
+  },
+  {
+    "userid": "user789",
+    "user_name": "Charlie Lee",
+    "bank_bal": 4300.0,
+    "portfolio": {
+      "META": 6,
+      "NVDA": 8,
+      "AMD": 12
+    }
+  }
+]
