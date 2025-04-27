@@ -2,6 +2,8 @@ import aiofiles
 import json
 import re
 import logging
+import uuid
+from datetime import datetime
 
 class DBHandler:
     def __init__(self, research_client):
@@ -9,7 +11,7 @@ class DBHandler:
 
     async def get_user_profile(self, userid: str) -> str:
         try:
-            async with aiofiles.open("user_data.json", "r") as f:
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_data.json", "r") as f:
                 content = await f.read()
                 users = json.loads(content)
 
@@ -22,9 +24,39 @@ class DBHandler:
             logging.error(f"Error loading user profile: {e}")
             return json.dumps({"error": "Failed to load user data"}, indent=2)
 
+    async def _log_transaction(self, userid: str, stock_symbol: str, transaction_type: str, shares: int, price_per_share: float):
+        """Internal helper to log the transaction into C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_transaction.json"""
+        try:
+            # Load existing transactions
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_transaction.json", "r") as f:
+                content = await f.read()
+                transactions = json.loads(content)
+
+            # Create a new transaction entry
+            new_transaction = {
+                "id": str(len(transactions) + 1),
+                "userid": userid,
+                "stock_symbol": stock_symbol,
+                "stock_name": stock_symbol,  # Placeholder, since no name lookup is implemented
+                "type": transaction_type,    # "buy" or "sell"
+                "shares": shares,
+                "price_per_share": price_per_share,
+                "date": datetime.utcnow().strftime("%Y-%m-%d"),
+                "initiator": "agent"
+            }
+
+            transactions.append(new_transaction)
+
+            # Save back
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_transaction.json", "w") as f:
+                await f.write(json.dumps(transactions, indent=2))
+
+        except Exception as e:
+            logging.error(f"Error logging transaction: {e}")
+
     async def buy_stock_for_user(self, userid: str, stock_symbol: str, quantity: int) -> str:
         try:
-            async with aiofiles.open("user_data.json", "r") as f:
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_data.json", "r") as f:
                 content = await f.read()
                 users = json.loads(content)
 
@@ -50,12 +82,15 @@ class DBHandler:
                     portfolio[stock_symbol] = portfolio.get(stock_symbol, 0) + quantity
                     user["portfolio"] = portfolio
 
+                    # Log transaction
+                    await self._log_transaction(userid, stock_symbol, "buy", quantity, current_price)
+
                     break
 
             if not user_found:
                 return json.dumps({"error": "User not found."}, indent=2)
 
-            async with aiofiles.open("user_data.json", "w") as f:
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_data.json", "w") as f:
                 await f.write(json.dumps(users, indent=2))
 
             return json.dumps({"message": "Stock purchased successfully."}, indent=2)
@@ -66,7 +101,7 @@ class DBHandler:
 
     async def sell_stock_for_user(self, userid: str, stock_symbol: str, quantity: int) -> str:
         try:
-            async with aiofiles.open("user_data.json", "r") as f:
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_data.json", "r") as f:
                 content = await f.read()
                 users = json.loads(content)
 
@@ -95,12 +130,15 @@ class DBHandler:
                     user["portfolio"] = portfolio
                     user["bank_bal"] += total_gain
 
+                    # Log transaction
+                    await self._log_transaction(userid, stock_symbol, "sell", quantity, current_price)
+
                     break
 
             if not user_found:
                 return json.dumps({"error": "User not found."}, indent=2)
 
-            async with aiofiles.open("user_data.json", "w") as f:
+            async with aiofiles.open("C:\\Users\\Administrator\\Downloads\\TrevorAI\\trevorai-backend\\data\\user_data.json", "w") as f:
                 await f.write(json.dumps(users, indent=2))
 
             return json.dumps({"message": "Stock sold successfully."}, indent=2)
