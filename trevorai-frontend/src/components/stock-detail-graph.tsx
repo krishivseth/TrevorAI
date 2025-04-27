@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import dynamic from 'next/dynamic'; 
+import dynamic from 'next/dynamic';
+import { cn } from '@/lib/utils';
 
 interface StockData {
   name: string;
@@ -35,72 +36,56 @@ const generateDummyStockHistory = (currentValue: number) => {
 // Dynamically import AreaVariant
 const AreaVariant = dynamic(() => import('@/components/area-variant').then(mod => mod.AreaVariant), {
     ssr: false,
-    loading: () => <p style={{ color: '#6b7280', textAlign: 'center', paddingTop: '20px' }}>Loading chart...</p>
+    loading: () => <p className="text-gray-500 text-center pt-5">Loading chart...</p>
 });
 
 export const StockDetailGraph = ({ stock }: StockDetailGraphProps) => {
-    const stockHistoryData = generateDummyStockHistory(stock.value);
+    // Use useMemo to ensure data is generated only once and remains consistent
+    const stockHistoryData = useMemo(() => generateDummyStockHistory(stock.value), [stock.value]);
+    
     const initialValue = stockHistoryData[0].value;
     const currentValue = stockHistoryData[stockHistoryData.length - 1].value;
     const totalChange = currentValue - initialValue;
     const totalChangePercent = (totalChange / initialValue) * 100;
 
+    // Determine color classes based on stock performance
+    const dailyChangeColor = stock.change > 0 ? "text-emerald-600" : "text-rose-600";
+    const thirtyDayChangeColor = totalChange > 0 ? "text-emerald-600" : "text-rose-600";
+    const percentChangeColor = totalChangePercent > 0 ? "text-emerald-600" : "text-rose-600";
+    
     return (
-        <div style={{ 
-            width: '100%', 
-            height: '100%', 
-            display: 'flex', 
-            flexDirection: 'column',
-            backgroundColor: 'white',
-            color: '#111827',
-            padding: '16px'
-        }}>
-            <div style={{ marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '4px' }}>{stock.name}</h3>
-                <p style={{ color: '#6b7280', fontSize: '14px' }}>Current Value: {formatCurrency(stock.value)}</p>
-                <p style={{ 
-                    color: stock.change > 0 ? '#10b981' : '#ef4444', 
-                    fontWeight: 'bold',
-                    fontSize: '14px'
-                }}>
+        <div className="w-full h-full flex flex-col bg-white text-gray-900">
+            {/* Header section */}
+            <div className="p-4 pb-2">
+                <h3 className="text-lg font-bold mb-1">{stock.name}</h3>
+                <p className="text-sm text-gray-600">
+                    Current Value: {formatCurrency(stock.value)}
+                </p>
+                <p className={cn("text-sm font-medium", dailyChangeColor)}>
                     {stock.change > 0 ? '+' : ''}{stock.change}% Today
                 </p>
             </div>
             
-            <div style={{ flex: 1, minHeight: '240px', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}>
-                    <AreaVariant data={stockHistoryData} />
-                </div>
+            {/* Chart section */}
+            <div className="flex-1 p-1">
+                <AreaVariant data={stockHistoryData} />
             </div>
             
-            {/* Stock performance metrics */}
-            <div style={{ 
-                marginTop: '12px', 
-                display: 'grid', 
-                gridTemplateColumns: '1fr 1fr', 
-                gap: '12px',
-                borderTop: '1px solid #e5e7eb',
-                paddingTop: '12px'
-            }}>
-                <div>
-                    <p style={{ color: '#6b7280', fontSize: '12px' }}>30-Day Change</p>
-                    <p style={{ 
-                        color: totalChange > 0 ? '#10b981' : '#ef4444',
-                        fontWeight: 'bold',
-                        fontSize: '14px'
-                    }}>
-                        {totalChange > 0 ? '+' : ''}{formatCurrency(totalChange)}
-                    </p>
-                </div>
-                <div>
-                    <p style={{ color: '#6b7280', fontSize: '12px' }}>Percent Change</p>
-                    <p style={{ 
-                        color: totalChangePercent > 0 ? '#10b981' : '#ef4444',
-                        fontWeight: 'bold',
-                        fontSize: '14px'
-                    }}>
-                        {totalChangePercent > 0 ? '+' : ''}{totalChangePercent.toFixed(2)}%
-                    </p>
+            {/* Bottom metrics section - simplified */}
+            <div className="border-t border-gray-200 p-3">
+                <div className="flex justify-between">
+                    <div>
+                        <div className="text-gray-500 text-xs">30-Day Change</div>
+                        <div className={cn("text-sm font-medium", thirtyDayChangeColor)}>
+                            {totalChange >= 0 ? '+' : ''}{formatCurrency(Math.abs(totalChange))}
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <div className="text-gray-500 text-xs">Percent Change</div>
+                        <div className={cn("text-sm font-medium", percentChangeColor)}>
+                            {totalChangePercent >= 0 ? '+' : ''}{Math.abs(totalChangePercent).toFixed(2)}%
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
