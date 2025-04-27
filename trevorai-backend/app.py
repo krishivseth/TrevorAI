@@ -9,10 +9,22 @@ CORS(app)
 
 # Load the portfolio data
 DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "user_data.json")
+# Load the transactions data
+TRANSACTION_PATH = os.path.join(os.path.dirname(__file__), "data", "user_transaction.json")
 
 def load_portfolios():
     with open(DATA_PATH, "r") as file:
         return json.load(file)
+    
+def load_transactions():
+    with open(TRANSACTION_PATH, "r") as file:
+        return json.load(file)
+
+@app.route("/api/transactions/<userid>", methods=["GET"])
+def get_user_transactions(userid):
+    transactions = load_transactions()
+    user_transactions = [tx for tx in transactions if tx["userid"] == userid]
+    return jsonify(user_transactions)
 
 @app.route("/api/portfolio/<userid>", methods=["GET"])
 def get_user_portfolio(userid):

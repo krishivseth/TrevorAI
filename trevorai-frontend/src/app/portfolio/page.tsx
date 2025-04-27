@@ -5,6 +5,7 @@ import { DataCard } from "@/components/data-card";
 import { FaPiggyBank } from "react-icons/fa";
 import { StockTreemap } from '@/components/stock-treemap';
 import { StockDetailGraph } from '@/components/stock-detail-graph';
+import { getStockQuote } from '@/lib/finnhub'; // <-- NEW import
 
 interface UserPortfolio {
   userid: string;
@@ -19,36 +20,57 @@ interface StockData {
   change: number;
 }
 
-const stockPrices: Record<string, number> = {
-  AAPL: 180,
-  GOOGL: 140,
-  TSLA: 250,
-  AMZN: 3500,
-  NFLX: 550,
-  MSFT: 300,
-};
-
 export default function PortfolioPage() {
   const [userData, setUserData] = useState<UserPortfolio | null>(null);
   const [stocks, setStocks] = useState<StockData[]>([]);
   const [selectedStock, setSelectedStock] = useState<StockData | null>(null);
 
+  const fetchPortfolioData = async () => {
+    const res = await fetch("http://127.0.0.1:8080/api/portfolio/CX734");
+    const data = await res.json();
+    setUserData(data);
+  };
+
+  const fetchStockPrices = async (symbols: string[]) => {
+    const prices: Record<string, number> = {};
+    await Promise.all(
+      symbols.map(async (symbol) => {
+        const price = await getStockQuote(symbol);
+        if (price !== null) {
+          prices[symbol] = price;
+        }
+      })
+    );
+    return prices;
+  };
+
+  const refreshStockData = async () => {
+    if (!userData) return;
+
+    const symbols = Object.keys(userData.portfolio);
+    const prices = await fetchStockPrices(symbols);
+
+    const updatedStocks = symbols.map((symbol) => ({
+      name: symbol,
+      value: (userData.portfolio[symbol] ?? 0) * (prices[symbol] ?? 0),
+      change: (Math.random() - 0.5) * 5, // keep dummy daily % change
+    }));
+
+    setStocks(updatedStocks);
+  };
+
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("http://127.0.0.1:8080/api/portfolio/user456");
-      const data = await res.json();
-      setUserData(data);
-
-      const stockList = Object.entries(data.portfolio).map(([symbol, shares]) => ({
-        name: symbol,
-        value: shares * (stockPrices[symbol] || 0),
-        change: (Math.random() - 0.5) * 5,
-      }));
-      setStocks(stockList);
-    }
-
-    fetchData();
+    fetchPortfolioData();
   }, []);
+
+  useEffect(() => {
+    if (!userData) return;
+
+    refreshStockData();
+    const interval = setInterval(refreshStockData, 30000); // 30 sec refresh
+
+    return () => clearInterval(interval);
+  }, [userData]);
 
   const handleStockSelect = (stock: StockData) => {
     setSelectedStock(stock);

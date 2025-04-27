@@ -1,69 +1,34 @@
 "use client";
 
-import React from 'react';
-import { format } from 'date-fns'; // For date formatting
-import { ArrowDownLeft, ArrowUpRight, Bot } from 'lucide-react'; // Icons
+import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
-// Define the structure for a transaction
 interface Transaction {
   id: string;
-  stockSymbol: string;
-  stockName: string; // e.g., Apple Inc.
+  stock_symbol: string;
+  stock_name: string;
   type: 'buy' | 'sell';
-  amountUSD: number; // Amount in USD
-  shares: number; // Number of shares involved
-  date: Date;
+  shares: number;
+  price_per_share: number;
+  date: string; // API will return as string
   initiator: 'user' | 'agent';
 }
 
-// Dummy data for demonstration
-const dummyTransactions: Transaction[] = [
-  {
-    id: '1',
-    stockSymbol: 'AAPL',
-    stockName: 'Apple Inc.',
-    type: 'buy',
-    amountUSD: 5000.00,
-    shares: 25.5,
-    date: new Date(2024, 10, 25), // Nov 25, 2024
-    initiator: 'agent',
-  },
-  {
-    id: '2',
-    stockSymbol: 'GOOGL',
-    stockName: 'Alphabet Inc.',
-    type: 'sell',
-    amountUSD: 3250.75,
-    shares: 10.2,
-    date: new Date(2024, 10, 19), // Nov 19, 2024
-    initiator: 'user',
-  },
-  {
-    id: '3',
-    stockSymbol: 'MSFT',
-    stockName: 'Microsoft Corp.',
-    type: 'buy',
-    amountUSD: 7800.00,
-    shares: 15.0,
-    date: new Date(2024, 8, 14), // Sep 14, 2024
-    initiator: 'agent',
-  },
-  {
-    id: '4',
-    stockSymbol: 'TSLA',
-    stockName: 'Tesla, Inc.',
-    type: 'sell',
-    amountUSD: 4100.20,
-    shares: 20.1,
-    date: new Date(2024, 8, 1), // Sep 1, 2024
-    initiator: 'user',
-  },
-];
-
 export default function TransactionsPage() {
-  // Group transactions by month (optional but good for display)
-  const groupedTransactions = dummyTransactions.reduce((acc, transaction) => {
-    const monthYear = format(transaction.date, 'MMMM yyyy');
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  
+  useEffect(() => {
+    async function fetchTransactions() {
+      const res = await fetch("http://127.0.0.1:8080/api/transactions/CX734"); // <-- Use appropriate user id
+      const data = await res.json();
+      setTransactions(data);
+    }
+    fetchTransactions();
+  }, []);
+
+  const groupedTransactions = transactions.reduce((acc, transaction) => {
+    const monthYear = format(new Date(transaction.date), 'MMMM yyyy');
     if (!acc[monthYear]) {
       acc[monthYear] = [];
     }
@@ -71,27 +36,23 @@ export default function TransactionsPage() {
     return acc;
   }, {} as Record<string, Transaction[]>);
 
-  // Get sorted month keys
   const sortedMonthKeys = Object.keys(groupedTransactions).sort((monthA, monthB) => {
     const [monthStrA, yearStrA] = monthA.split(' ');
     const [monthStrB, yearStrB] = monthB.split(' ');
-    const monthIndexA = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].indexOf(monthStrA);
-    const monthIndexB = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].indexOf(monthStrB);
-    const dateA = new Date(parseInt(yearStrA), monthIndexA);
-    const dateB = new Date(parseInt(yearStrB), monthIndexB);
-    return dateB.getTime() - dateA.getTime(); // Sort descending
+    const monthIndexA = new Date(`${monthStrA} 1, ${yearStrA}`).getMonth();
+    const monthIndexB = new Date(`${monthStrB} 1, ${yearStrB}`).getMonth();
+    const yearA = parseInt(yearStrA);
+    const yearB = parseInt(yearStrB);
+    return new Date(yearB, monthIndexB).getTime() - new Date(yearA, monthIndexA).getTime();
   });
 
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 pt-6">
       <h1 className="text-2xl font-semibold mb-6">Transaction History</h1>
       
-      {/* TODO: Add Filters and Search Bar here later */}
-      <div className="mb-4 flex space-x-2">{/* Placeholder for filters */}</div>
-
-      <div className="bg-card rounded-lg shadow-sm border">{/* Removed padding here to allow full-width dividers */}
+      <div className="bg-card rounded-lg shadow-sm border">
         {sortedMonthKeys.map((monthYear) => (
-          <div key={monthYear} className="">
+          <div key={monthYear}>
             <h2 className="text-lg font-medium p-4 text-muted-foreground">{monthYear}</h2>
             <ul className="divide-y divide-border">
               {groupedTransactions[monthYear].map((tx) => (
@@ -105,19 +66,19 @@ export default function TransactionsPage() {
                     </div>
                     <div>
                       <p className="font-medium text-card-foreground">
-                        {tx.type === 'buy' ? 'Bought' : 'Sold'} {tx.stockSymbol}
+                        {tx.type === 'buy' ? 'Bought' : 'Sold'} {tx.stock_symbol}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {tx.shares} shares {tx.initiator === 'agent' ? '(by Agent)' : ''}
+                        {tx.shares} shares {tx.initiator === 'agent' && '(by Agent)'}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className={`font-medium ${tx.type === 'buy' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
-                      {tx.type === 'buy' ? '+' : '-'}${tx.amountUSD.toFixed(2)}
+                      {tx.type === 'buy' ? '+' : '-'}${(tx.shares * tx.price_per_share).toFixed(2)}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {format(tx.date, 'MMM dd, yyyy')}
+                      {format(new Date(tx.date), 'MMM dd, yyyy')}
                     </p>
                   </div>
                 </li>
@@ -128,4 +89,4 @@ export default function TransactionsPage() {
       </div>
     </div>
   );
-} 
+}
