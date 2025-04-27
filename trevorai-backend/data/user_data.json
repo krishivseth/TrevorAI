@@ -1,33 +1,38 @@
 [
-
   {
     "userid": "FYJ57",
     "user_name": "Alice Johnson",
-    "bank_bal": 110974.5,
+    "bank_bal": 25300.75,
     "portfolio": {
-      "AAPL": 11,
-      "GOOGL": 5,
-      "TSLA": 2
+      "AAPL": 18,
+      "GOOGL": 10,
+      "TSLA": 6,
+      "NVDA": 8,
+      "AMZN": 5
     }
   },
   {
     "userid": "KXJ83",
     "user_name": "Bob Smith",
-    "bank_bal": 8500.75,
+    "bank_bal": 17200.25,
     "portfolio": {
-      "AMZN": 3,
-      "NFLX": 7,
-      "MSFT": 4
+      "AMZN": 7,
+      "NFLX": 12,
+      "MSFT": 9,
+      "META": 5,
+      "SPOT": 4
     }
   },
   {
     "userid": "CX734",
     "user_name": "Charlie Lee",
-    "bank_bal": 4300.0,
+    "bank_bal": 9500.0,
     "portfolio": {
-      "META": 6,
-      "NVDA": 8,
-      "AMD": 12
+      "META": 10,
+      "NVDA": 14,
+      "AMD": 18,
+      "SHOP": 6,
+      "SQ": 7
     }
   }
 ]
