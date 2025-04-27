@@ -15,6 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!trevorai-frontend/src/lib/
 lib64/
 parts/
 sdist/
