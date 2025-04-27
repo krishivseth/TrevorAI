@@ -30,7 +30,7 @@ export default function PortfolioPage() {
 
   const fetchPortfolioData = async () => {
     setLoading(true);
-    const res = await fetch(`http://127.0.0.1:8080/api/portfolio/${selectedUser.userid}`);
+    const res = await fetch(`http://127.0.0.1:8081/api/portfolio/${selectedUser.userid}`);
     const data = await res.json();
     setUserData(data);
     setLoading(false);

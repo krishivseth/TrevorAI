@@ -1,135 +1,134 @@
 [
-    {
-      "id": "1",
-      "userid": "FYJ57",
-      "stock_symbol": "AAPL",
-      "stock_name": "Apple Inc.",
-      "type": "buy",
-      "shares": 10,
-      "price_per_share": 150.00,
-      "date": "2024-10-15",
-      "initiator": "agent"
-    },
-    {
-      "id": "2",
-      "userid": "FYJ57",
-      "stock_symbol": "TSLA",
-      "stock_name": "Tesla, Inc.",
-      "type": "sell",
-      "shares": 5,
-      "price_per_share": 700.00,
-      "date": "2024-10-20",
-      "initiator": "agent"
-    },
-    {
-      "id": "3",
-      "userid": "CX734",
-      "stock_symbol": "META",
-      "stock_name": "Meta Platforms, Inc.",
-      "type": "buy",
-      "shares": 8,
-      "price_per_share": 320.00,
-      "date": "2024-09-05",
-      "initiator": "agent"
-    },
-    {
-      "id": "4",
-      "userid": "KXJ83",
-      "stock_symbol": "NFLX",
-      "stock_name": "Netflix, Inc.",
-      "type": "sell",
-      "shares": 6,
-      "price_per_share": 450.00,
-      "date": "2024-08-18",
-      "initiator": "agent"
-    },
-    {
-      "id": "5",
-      "userid": "FYJ57",
-      "stock_symbol": "GOOGL",
-      "stock_name": "Alphabet Inc.",
-      "type": "buy",
-      "shares": 4,
-      "price_per_share": 2800.00,
-      "date": "2024-08-25",
-      "initiator": "agent"
-    },
-    {
-      "id": "6",
-      "userid": "CX734",
-      "stock_symbol": "AMD",
-      "stock_name": "Advanced Micro Devices, Inc.",
-      "type": "sell",
-      "shares": 12,
-      "price_per_share": 115.00,
-      "date": "2024-09-12",
-      "initiator": "agent"
-    },
-    {
-      "id": "7",
-      "userid": "KXJ83",
-      "stock_symbol": "AMZN",
-      "stock_name": "Amazon.com, Inc.",
-      "type": "buy",
-      "shares": 5,
-      "price_per_share": 3300.00,
-      "date": "2024-07-30",
-      "initiator": "agent"
-    },
-    {
-      "id": "8",
-      "userid": "FYJ57",
-      "stock_symbol": "TSLA",
-      "stock_name": "Tesla, Inc.",
-      "type": "buy",
-      "shares": 3,
-      "price_per_share": 720.00,
-      "date": "2024-10-05",
-      "initiator": "agent"
-    },
-    {
-      "id": "9",
-      "userid": "CX734",
-      "stock_symbol": "NVDA",
-      "stock_name": "NVIDIA Corporation",
-      "type": "buy",
-      "shares": 7,
-      "price_per_share": 550.00,
-      "date": "2024-09-18",
-      "initiator": "agent"
-    },
-    {
-      "id": "10",
-      "userid": "KXJ83",
-      "stock_symbol": "MSFT",
-      "stock_name": "Microsoft Corporation",
-      "type": "sell",
-      "shares": 3,
-      "price_per_share": 290.00,
-      "date": "2024-07-10",
-      "initiator": "agent"
-    },
-    {
-      "id": "11",
-      "userid": "FYJ57",
-      "stock_symbol": "NFLX",
-      "stock_name": "Netflix, Inc.",
-      "type": "buy",
-      "shares": 2,
-      "price_per_share": 450.00,
-      "date": "2024-09-30",
-      "initiator": "agent"
-    },
-    {
-      "id": "12",
-      "userid": "CX734",
-      "stock_symbol": "META",
-      "stock_name": "Meta Platforms, Inc.",
-      "type": "sell",
-      "shares": 4,
-      "price_per_share": 340.00,
-      "date": "2024-10-01",
-      "initiator": "agent"
-    }
-  ]
-  
+  {
+    "id": "1",
+    "userid": "FYJ57",
+    "stock_symbol": "AAPL",
+    "stock_name": "Apple Inc.",
+    "type": "buy",
+    "shares": 10,
+    "price_per_share": 150.00,
+    "date": "2024-10-15",
+    "initiator": "agent"
+  },
+  {
+    "id": "2",
+    "userid": "FYJ57",
+    "stock_symbol": "TSLA",
+    "stock_name": "Tesla, Inc.",
+    "type": "sell",
+    "shares": 5,
+    "price_per_share": 700.00,
+    "date": "2024-10-20",
+    "initiator": "agent"
+  },
+  {
+    "id": "3",
+    "userid": "CX734",
+    "stock_symbol": "META",
+    "stock_name": "Meta Platforms, Inc.",
+    "type": "buy",
+    "shares": 8,
+    "price_per_share": 320.00,
+    "date": "2024-09-05",
+    "initiator": "agent"
+  },
+  {
+    "id": "4",
+    "userid": "KXJ83",
+    "stock_symbol": "NFLX",
+    "stock_name": "Netflix, Inc.",
+    "type": "sell",
+    "shares": 6,
+    "price_per_share": 450.00,
+    "date": "2024-08-18",
+    "initiator": "agent"
+  },
+  {
+    "id": "5",
+    "userid": "FYJ57",
+    "stock_symbol": "GOOGL",
+    "stock_name": "Alphabet Inc.",
+    "type": "buy",
+    "shares": 4,
+    "price_per_share": 2800.00,
+    "date": "2024-08-25",
+    "initiator": "agent"
+  },
+  {
+    "id": "6",
+    "userid": "CX734",
+    "stock_symbol": "AMD",
+    "stock_name": "Advanced Micro Devices, Inc.",
+    "type": "sell",
+    "shares": 12,
+    "price_per_share": 115.00,
+    "date": "2024-09-12",
+    "initiator": "agent"
+  },
+  {
+    "id": "7",
+    "userid": "KXJ83",
+    "stock_symbol": "AMZN",
+    "stock_name": "Amazon.com, Inc.",
+    "type": "buy",
+    "shares": 5,
+    "price_per_share": 3300.00,
+    "date": "2024-07-30",
+    "initiator": "agent"
+  },
+  {
+    "id": "8",
+    "userid": "FYJ57",
+    "stock_symbol": "TSLA",
+    "stock_name": "Tesla, Inc.",
+    "type": "buy",
+    "shares": 3,
+    "price_per_share": 720.00,
+    "date": "2024-10-05",
+    "initiator": "agent"
+  },
+  {
+    "id": "9",
+    "userid": "CX734",
+    "stock_symbol": "NVDA",
+    "stock_name": "NVIDIA Corporation",
+    "type": "buy",
+    "shares": 7,
+    "price_per_share": 550.00,
+    "date": "2024-09-18",
+    "initiator": "agent"
+  },
+  {
+    "id": "10",
+    "userid": "KXJ83",
+    "stock_symbol": "MSFT",
+    "stock_name": "Microsoft Corporation",
+    "type": "sell",
+    "shares": 3,
+    "price_per_share": 290.00,
+    "date": "2024-07-10",
+    "initiator": "agent"
+  },
+  {
+    "id": "11",
+    "userid": "FYJ57",
+    "stock_symbol": "NFLX",
+    "stock_name": "Netflix, Inc.",
+    "type": "buy",
+    "shares": 2,
+    "price_per_share": 450.00,
+    "date": "2024-09-30",
+    "initiator": "agent"
+  },
+  {
+    "id": "12",
+    "userid": "CX734",
+    "stock_symbol": "META",
+    "stock_name": "Meta Platforms, Inc.",
+    "type": "sell",
+    "shares": 4,
+    "price_per_share": 340.00,
+    "date": "2024-10-01",
+    "initiator": "agent"
+  }
+]

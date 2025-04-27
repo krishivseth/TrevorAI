@@ -24,7 +24,7 @@ export default function TransactionsPage() {
   useEffect(() => {
     async function fetchTransactions() {
       setLoading(true);
-      const res = await fetch(`http://127.0.0.1:8080/api/transactions/${selectedUser.userid}`);
+      const res = await fetch(`http://127.0.0.1:8081/api/transactions/${selectedUser.userid}`);
       const data = await res.json();
       setTransactions(data);
       setLoading(false);
