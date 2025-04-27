@@ -87,9 +87,9 @@ export default function TransactionsPage() {
       <h1 className="text-2xl font-semibold mb-6">Transaction History</h1>
       
       {/* TODO: Add Filters and Search Bar here later */}
-      <div className="mb-4 flex space-x-2"><!-- Placeholder for filters --></div>
+      <div className="mb-4 flex space-x-2">{/* Placeholder for filters */}</div>
 
-      <div className="bg-card rounded-lg shadow-sm border"><!-- Removed padding here to allow full-width dividers */}
+      <div className="bg-card rounded-lg shadow-sm border">{/* Removed padding here to allow full-width dividers */}
         {sortedMonthKeys.map((monthYear) => (
           <div key={monthYear} className="">
             <h2 className="text-lg font-medium p-4 text-muted-foreground">{monthYear}</h2>
