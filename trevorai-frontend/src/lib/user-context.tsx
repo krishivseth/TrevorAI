@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 const users = [
   { userid: "FYJ57", name: "Alice Johnson - FYJ57" },
@@ -19,7 +19,22 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [selectedUser, setSelectedUser] = useState<User>(users[0]); // default Alice
+  const [selectedUser, setSelectedUserState] = useState<User>(users[0]); // default Alice
+
+  useEffect(() => {
+    const savedUserid = localStorage.getItem("selectedUserid");
+    if (savedUserid) {
+      const savedUser = users.find(u => u.userid === savedUserid);
+      if (savedUser) {
+        setSelectedUserState(savedUser);
+      }
+    }
+  }, []);
+
+  const setSelectedUser = (user: User) => {
+    setSelectedUserState(user);
+    localStorage.setItem("selectedUserid", user.userid);
+  };
 
   return (
     <UserContext.Provider value={{ selectedUser, setSelectedUser, users }}>
