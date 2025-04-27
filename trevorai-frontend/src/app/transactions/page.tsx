@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import { useUser } from "@/lib/user-context"; // User Context
 import { format } from 'date-fns';
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 
@@ -11,21 +12,25 @@ interface Transaction {
   type: 'buy' | 'sell';
   shares: number;
   price_per_share: number;
-  date: string; // API will return as string
+  date: string;
   initiator: 'user' | 'agent';
 }
 
 export default function TransactionsPage() {
+  const { selectedUser } = useUser(); // <-- Get selected user
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function fetchTransactions() {
-      const res = await fetch("http://127.0.0.1:8080/api/transactions/CX734"); // <-- Use appropriate user id
+      setLoading(true);
+      const res = await fetch(`http://127.0.0.1:8080/api/transactions/${selectedUser.userid}`);
       const data = await res.json();
       setTransactions(data);
+      setLoading(false);
     }
     fetchTransactions();
-  }, []);
+  }, [selectedUser]); // 🛠️ refetch whenever selectedUser changes
 
   const groupedTransactions = transactions.reduce((acc, transaction) => {
     const monthYear = format(new Date(transaction.date), 'MMMM yyyy');
@@ -46,10 +51,14 @@ export default function TransactionsPage() {
     return new Date(yearB, monthIndexB).getTime() - new Date(yearA, monthIndexA).getTime();
   });
 
+  if (loading) {
+    return <div className="flex items-center justify-center h-[calc(100vh-200px)] text-gray-400">Loading Transactions...</div>;
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 pt-6">
       <h1 className="text-2xl font-semibold mb-6">Transaction History</h1>
-      
+
       <div className="bg-card rounded-lg shadow-sm border">
         {sortedMonthKeys.map((monthYear) => (
           <div key={monthYear}>
@@ -59,10 +68,11 @@ export default function TransactionsPage() {
                 <li key={tx.id} className="flex items-center justify-between p-4 hover:bg-muted/50">
                   <div className="flex items-center space-x-3">
                     <div className={`p-2 rounded-full ${tx.type === 'buy' ? 'bg-emerald-100 dark:bg-emerald-900' : 'bg-rose-100 dark:bg-rose-900'}`}>
-                      {tx.type === 'buy' ? 
-                        <ArrowUpRight className="h-5 w-5 text-emerald-600 dark:text-emerald-400" /> : 
+                      {tx.type === 'buy' ? (
+                        <ArrowUpRight className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                      ) : (
                         <ArrowDownLeft className="h-5 w-5 text-rose-600 dark:text-rose-400" />
-                      }
+                      )}
                     </div>
                     <div>
                       <p className="font-medium text-card-foreground">
