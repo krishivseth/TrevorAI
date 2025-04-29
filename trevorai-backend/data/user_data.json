@@ -34,5 +34,18 @@
       "SHOP": 6,
       "SQ": 7
     }
+  },
+  {
+    "userid": "RP001",
+    "user_name": "Roop Pal",
+    "bank_bal": 10000.0,
+    "portfolio": {
+      "DIS": 8,
+      "PYPL": 5,
+      "UBER": 11,
+      "CRM": 7,
+      "BABA": 6,
+      "COIN": 4
+    }
   }
 ]
