@@ -1,58 +1,110 @@
-Inspiration
-Inspired by Trevor Lefkowitz from Ghosts US, TrevorAI is a wealth-management agent designed for everyday investors. Just like the financially savvy ghost Trevor, our AI assistant helps users make informed investment decisions without complex financial jargon. We noticed that many people find the stock market intimidating, and wealth-management services are often accessible only to high-net-worth individuals. TrevorAI bridges this gap by bringing personalized investment assistance to everyone.
+# TrevorAI 🧠💰
 
-What it does
-TrevorAI is an AI-powered financial assistant that:
+**Your AI-powered wealth management assistant.**
 
-Analyzes the user’s portfolio and recommends optimal stocks to buy based on risk profile and goals
-Monitors stock performance in real time and suggests strategic buy/sell timings
-Executes trades automatically when authorized by the user
-Provides a comprehensive dashboard visualizing portfolio performance, stock distributions, and trends
-Maintains a detailed transaction history, distinguishing between AI-initiated and user-initiated trades
-Enables natural phone conversations for stock management—no technical know-how required
-How we built it
-Our solution combines several technologies:
+TrevorAI brings the intelligence and charm of *Trevor Lefkowitz (Ghosts US)* into the world of personal finance. Inspired by Trevor’s sharp financial instincts, this AI agent is designed to make investing accessible, intuitive, and actionable for everyone—not just high-net-worth individuals.
 
-Frontend:
-Framework: Next.js
-Styling: Tailwind CSS
-Visualization: Recharts, Nivo
-Backend:
-Server: Flask
-Communication: WebSockets & RESTful APIs
-AI Agent:
-Architecture: Multi-agent system powered by Gemini 2.5 Flash
-Features: Function calling for conversational finance tasks
-Research Tools:
-Custom integrations for stock research, web search, and market analysis
-Financial Data:
-APIs: Finnhub, AlphaVantage (real-time stock quotes)
-Database:
-Storage: Structured JSON for portfolios and transactions
-Phone Integration:
-Voice tech enabling hands-free interaction with TrevorAI
-Challenges we ran into
-Finnhub Module Integration: Adapting the CommonJS finnhub module to work with Next.js server components, handling client vs. server contexts
-Real-time Data Rendering: Optimizing performance for complex visualizations with live updates
-Natural Language Understanding: Building sophisticated tool-calling logic to parse varied user queries
-Market Data Limits: Staying within free-tier API quotas while maintaining accurate portfolio valuations
-Accomplishments that we’re proud of
-Built an intuitive dashboard that makes complex financial data accessible
-Implemented an AI agent capable of both advising on and executing trades
-Created a responsive UI compatible across desktop and mobile
-Enabled phone-call interactions to reach users who prefer voice over text
-Distinguished AI-initiated vs. user-initiated trades for full transparency
-What we learned
-The power of clear, intuitive visualizations for complex datasets
-Best practices for integrating AI agents into production apps
-Techniques for handling and streaming real-time financial data
-Designing cross-platform experiences that blend voice and visual interfaces
-Security and responsibility considerations when automating financial transactions
-What’s next for TrevorAI
-Advanced Portfolio Analysis: More sophisticated optimization algorithms
-Expanded Asset Classes: Support for ETFs, bonds, and cryptocurrencies
-Personalized Learning: Adaptive recommendations based on user behavior
-Notifications: Proactive alerts for market events impacting user holdings
-Social Features: Opt-in sharing of portfolios and strategies
-Brokerage Integration: Seamless connectivity with major trading platforms
-Enhanced Research: Deeper trend forecasting and company analysis
+---
+
+## 🚀 Features
+
+TrevorAI helps users manage their portfolios through a powerful mix of automation, AI-driven insights, and a natural conversational interface:
+
+- 📊 **Portfolio Analysis**: Recommends stocks based on risk profile and financial goals
+- 📈 **Real-Time Monitoring**: Tracks market performance and suggests buy/sell opportunities
+- 🔁 **Auto-Trading**: Executes trades when authorized by the user
+- 📉 **Comprehensive Dashboard**: Visualizes portfolio performance, distribution, and trends
+- 🗃 **Transaction History**: Distinguishes AI-initiated vs. user-initiated trades
+- 📞 **Voice Assistant**: Manage investments through natural phone conversations
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- **Framework**: Next.js
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts, Nivo
+
+### Backend
+- **Server**: Flask (Python)
+- **Communication**: RESTful APIs + WebSockets
+
+### AI Agent
+- **LLM Engine**: Gemini 2.5 Flash
+- **Features**: Multi-agent architecture, function calling for conversational tasks
+
+### Research & Data
+- **APIs**: Finnhub, AlphaVantage (for real-time stock data)
+- **Database**: Structured JSON for portfolios and trade logs
+
+### Phone Integration
+- **Voice Interface**: Natural language stock management via phone
+
+---
+
+## 🔍 Challenges
+
+- 🧩 Adapting Finnhub’s CommonJS module for Next.js
+- ⚡ Real-time data streaming + visualization without performance loss
+- 🧠 Parsing diverse natural language queries into executable trade actions
+- 🏷 API quota management while ensuring accuracy
+
+---
+
+## 🎉 Highlights
+
+- Intuitive, real-time financial dashboard
+- Fully functional AI trade advisor + executor
+- Voice-enabled interface for non-technical users
+- Transparent trade history with clear AI/user distinction
+- Cross-device responsive UI
+
+---
+
+## 📚 What We Learned
+
+- Importance of clear data visualizations for user trust
+- Building secure, production-ready AI agents
+- Handling real-time financial data efficiently
+- Designing for voice and screen simultaneously
+- Ensuring transparency and responsibility in auto-trading
+
+---
+
+## 📈 Roadmap
+
+- 🔍 Advanced Portfolio Optimization (Modern Portfolio Theory, etc.)
+- 🪙 Support for ETFs, Bonds, Crypto
+- 🧠 Personalized Recommendations with Behavioral Learning
+- 📬 Event-Based Alerts and Notifications
+- 🌐 Social Features (Opt-in strategy sharing)
+- 🔗 Brokerage Integrations (Robinhood, Fidelity, etc.)
+- 🔮 Deep Company Analysis + Market Forecasting
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+## 👥 Authors
+
+- [Subhrato Som](https://github.com/Subhrato20)  
+- [Imon Bera](https://github.com/invcble)
+- [Subhrato Som](https://github.com/krishivseth) 
+
+---
+
+## 🙌 Acknowledgements
+
+Inspired by *Trevor Lefkowitz* from **Ghosts (US)**. Big thanks to the APIs and open-source tools that made TrevorAI possible.
+
