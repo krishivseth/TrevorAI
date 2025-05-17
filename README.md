@@ -100,7 +100,7 @@ MIT License
 
 - [Subhrato Som](https://github.com/Subhrato20)  
 - [Imon Bera](https://github.com/invcble)
-- [Subhrato Som](https://github.com/krishivseth) 
+- [Krishiv Seth](https://github.com/krishivseth) 
 
 ---
 
