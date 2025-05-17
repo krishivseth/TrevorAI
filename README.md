@@ -84,6 +84,14 @@ TrevorAI helps users manage their portfolios through a powerful mix of automatio
 
 ---
 
+## 🎥 Demo
+
+[![Watch the demo](https://img.youtube.com/vi/6SBfbEosFn0/0.jpg)](https://youtu.be/6SBfbEosFn0)
+
+
+---
+
+
 ## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
