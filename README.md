@@ -19,6 +19,13 @@ TrevorAI helps users manage their portfolios through a powerful mix of automatio
 
 ---
 
+## 🎥 Demo
+
+[![Watch the demo](https://img.youtube.com/vi/6SBfbEosFn0/0.jpg)](https://youtu.be/6SBfbEosFn0)
+
+
+---
+
 ## 🛠 Tech Stack
 
 ### Frontend
@@ -83,14 +90,6 @@ TrevorAI helps users manage their portfolios through a powerful mix of automatio
 - 🔮 Deep Company Analysis + Market Forecasting
 
 ---
-
-## 🎥 Demo
-
-[![Watch the demo](https://img.youtube.com/vi/6SBfbEosFn0/0.jpg)](https://youtu.be/6SBfbEosFn0)
-
-
----
-
 
 ## 🤝 Contributing
 
