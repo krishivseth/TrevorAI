@@ -1,4 +1,4 @@
-# TrevorAI 🧠💰
+# TrevorAI 
 
 **Your AI-powered wealth management assistant.**
 
